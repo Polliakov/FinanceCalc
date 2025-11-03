@@ -1,0 +1,545 @@
+﻿<Window
+    x:Class="FinanceCalc.Forms.BondsCatalogWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:FinanceCalc.Controls"
+    xmlns:converters="clr-namespace:FinanceCalc.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Bonds Catalog"
+    Width="1720"
+    Height="800"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <converters:ProfitabilityToBrushConverter x:Key="ProfitabilityBrush" />
+        <converters:CostToPercentConverter x:Key="CostToPercentConverter" />
+    </Window.Resources>
+    <Border Style="{StaticResource CardBorderStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Margin="0,0,0,12"
+                HorizontalAlignment="Center"
+                FontSize="16"
+                FontWeight="Bold"
+                Foreground="#2B3E50"
+                Text="Bonds Catalog" />
+
+            <Grid Grid.Row="1" Margin="0,0,0,8">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <GroupBox
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    Padding="6"
+                    Header="Naming">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Style="{StaticResource ReadOnlyTextBoxStyle}"
+                            Text="Name:" />
+                        <TextBox
+                            Name="NameFilterBox"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource ReadOnlyTextBoxStyle}"
+                            Text="Ticker:" />
+                        <TextBox
+                            Name="TickerFilterBox"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox
+                    Grid.Column="1"
+                    Margin="0,0,12,0"
+                    Padding="6"
+                    Header="General">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Nominal  -->
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Style="{StaticResource ReadOnlyTextBoxStyle}"
+                            Text="Nominal:" />
+                        <TextBox
+                            Name="NominalFilterMinBox"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+                        <TextBox
+                            Name="NominalFilterMaxBox"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+
+                        <!--  Cost  -->
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            Style="{StaticResource ReadOnlyTextBoxStyle}"
+                            Text="Cost (%):" />
+                        <TextBox
+                            Name="CostFilterMinBox"
+                            Grid.Row="0"
+                            Grid.Column="4"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged"
+                            ToolTip="Min cost as % of nominal" />
+                        <TextBox
+                            Name="CostFilterMaxBox"
+                            Grid.Row="0"
+                            Grid.Column="5"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged"
+                            ToolTip="Max cost as % of nominal" />
+
+                        <!--  Capital Profitability Year Range  -->
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="6"
+                            Style="{StaticResource ReadOnlyTextBoxStyle}"
+                            Text="Capital Prof (y):" />
+                        <TextBox
+                            Name="CapitalProfYearFilterMinBox"
+                            Grid.Row="0"
+                            Grid.Column="7"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+                        <TextBox
+                            Name="CapitalProfYearFilterMaxBox"
+                            Grid.Row="0"
+                            Grid.Column="8"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+
+                        <!--  Coupon  -->
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Style="{StaticResource ReadOnlyTextBoxStyle}"
+                            Text="Coupon:" />
+                        <TextBox
+                            Name="CouponFilterMinBox"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+                        <TextBox
+                            Name="CouponFilterMaxBox"
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+
+                        <!--  Coupons per Year  -->
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            Style="{StaticResource ReadOnlyTextBoxStyle}"
+                            Text="Coupons/Y:" />
+                        <TextBox
+                            Name="CouponsPerYearFilterMinBox"
+                            Grid.Row="1"
+                            Grid.Column="4"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+                        <TextBox
+                            Name="CouponsPerYearFilterMaxBox"
+                            Grid.Row="1"
+                            Grid.Column="5"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+                        <TextBlock Grid.Row="0" Grid.Column="7" />
+
+                        <!--  Coupon Profitability Year Range  -->
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="6"
+                            Style="{StaticResource ReadOnlyTextBoxStyle}"
+                            Text="Coupon Prof (y):" />
+                        <TextBox
+                            Name="CouponProfYearFilterMinBox"
+                            Grid.Row="1"
+                            Grid.Column="7"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+                        <TextBox
+                            Name="CouponProfYearFilterMaxBox"
+                            Grid.Row="1"
+                            Grid.Column="8"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox
+                    Grid.Column="2"
+                    Margin="0"
+                    Padding="6"
+                    Header="Summary">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <!--  Duration  -->
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Style="{StaticResource ReadOnlyTextBoxStyle}"
+                            Text="Duration (y):" />
+                        <TextBox
+                            Name="DurationFilterMinBox"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+                        <TextBox
+                            Name="DurationFilterMaxBox"
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            Grid.ColumnSpan="2"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+
+                        <!--  Profitability Year  -->
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Style="{StaticResource ReadOnlyTextBoxStyle}"
+                            Text="Profitability (y):" />
+                        <TextBox
+                            Name="ProfitabilityYearFilterMinBox"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+                        <TextBox
+                            Name="ProfitabilityYearFilterMaxBox"
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged" />
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            Grid.ColumnSpan="2"
+                            Margin="-4,15,32,-10"
+                            Panel.ZIndex="1"
+                            Content="m"
+                            Foreground="#656565" />
+                        <TextBox
+                            Name="ProfitabilityPerDurationMinBox"
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged"
+                            ToolTip="With maximum duration." />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="4"
+                            Grid.ColumnSpan="2"
+                            Margin="-4,15,32,-10"
+                            Panel.ZIndex="1"
+                            Content="m"
+                            Foreground="#656565" />
+                        <TextBox
+                            Name="ProfitabilityPerDurationMaxBox"
+                            Grid.Row="1"
+                            Grid.Column="4"
+                            Style="{StaticResource InputTextBoxStyle}"
+                            TextChanged="Filter_TextChanged"
+                            ToolTip="With maximum duration." />
+
+                        <!--  Has Offer  -->
+                        <CheckBox
+                            Name="NoOfferFilter"
+                            Grid.Row="0"
+                            Grid.Column="5"
+                            Margin="12,0,0,0"
+                            VerticalAlignment="Center"
+                            Checked="Filter_TextChanged"
+                            Content="No Offer"
+                            Unchecked="Filter_TextChanged" />
+
+                    </Grid>
+                </GroupBox>
+
+            </Grid>
+
+            <!--  Metadata block  -->
+            <Border
+                Grid.Row="2"
+                Margin="0,0,0,8"
+                Padding="6"
+                Background="#F8F9FA"
+                BorderBrush="#CED4DA"
+                BorderThickness="1"
+                CornerRadius="4">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontWeight="Bold" Text="Total:" />
+                    <TextBlock Name="TotalCountText" Margin="4,0,20,0" />
+                    <TextBlock FontWeight="Bold" Text="Found:" />
+                    <TextBlock Name="FoundCountText" Margin="4,0,0,0" />
+                </StackPanel>
+            </Border>
+
+            <!--  Metrics View  -->
+            <!--<Border
+                Grid.Row="2"
+                Margin="0,0,0,8"
+                Padding="0"
+                Style="{StaticResource CardBorderStyle}">
+                <controls:BondMetricsView x:Name="MetricsView" />
+            </Border>-->
+
+            <DataGrid
+                Name="BondsGrid"
+                Grid.Row="3"
+                AutoGenerateColumns="False"
+                CanUserSortColumns="True"
+                CellStyle="{StaticResource DataGridCellStyle}"
+                ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                IsReadOnly="True"
+                PreviewMouseLeftButtonDown="BondsGrid_PreviewMouseLeftButtonDown"
+                RowStyle="{StaticResource DataGridRowStyle}"
+                SelectionMode="Single"
+                Style="{StaticResource DataGridStyle}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Name}"
+                        Header="Name" />
+                    <DataGridTextColumn
+                        Width="120"
+                        Binding="{Binding Ticker}"
+                        Header="Ticker" />
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding Cost, StringFormat={}{0:N2}}"
+                        Header="Cost" />
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding ., Converter={StaticResource CostToPercentConverter}}"
+                        Header="Cost (%)" />
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding Nominal, StringFormat={}{0:N2}}"
+                        Header="Nominal" />
+                    <DataGridTextColumn
+                        Width="90"
+                        Binding="{Binding CapitalProfitability, StringFormat={}{0:P2}}"
+                        Header="Capital Profitability"
+                        SortMemberPath="CapitalProfitability">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{Binding CapitalProfitability, Converter={StaticResource ProfitabilityBrush}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn
+                        Width="90"
+                        Binding="{Binding CapitalProfitabilityYear, StringFormat={}{0:P2}}"
+                        Header="Capital Profitability (year)"
+                        SortMemberPath="CapitalProfitabilityYear">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{Binding CapitalProfitabilityYear, Converter={StaticResource ProfitabilityBrush}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn
+                        Width="80"
+                        Binding="{Binding Coupon, StringFormat={}{0:N2}}"
+                        Header="Coupon" />
+                    <DataGridTextColumn
+                        Width="75"
+                        Binding="{Binding CouponsPerYear}"
+                        Header="Coupons/Year" />
+                    <DataGridTextColumn
+                        Width="75"
+                        Binding="{Binding CouponsPeriodMonths, StringFormat={}{0:N2}}"
+                        Header="Coupons Period (months)" />
+                    <DataGridTextColumn
+                        Width="90"
+                        Binding="{Binding CouponProfitability, StringFormat={}{0:P2}}"
+                        Header="Coupon Profitability"
+                        SortMemberPath="CouponProfitability">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{Binding CouponProfitability, Converter={StaticResource ProfitabilityBrush}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn
+                        Width="90"
+                        Binding="{Binding CouponProfitabilityYear, StringFormat={}{0:P2}}"
+                        Header="Coupon Profitability (year)"
+                        SortMemberPath="CouponProfitabilityYear">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{Binding CouponProfitabilityYear, Converter={StaticResource ProfitabilityBrush}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn
+                        Width="110"
+                        Binding="{Binding DateEnd, StringFormat={}{0:yyyy-MM-dd}}"
+                        Header="End" />
+                    <DataGridTextColumn
+                        Width="110"
+                        Binding="{Binding OfferDate, StringFormat={}{0:yyyy-MM-dd}}"
+                        Header="Offer" />
+                    <DataGridTextColumn
+                        Width="75"
+                        Binding="{Binding DurationYears, StringFormat={}{0:N2}}"
+                        Header="Duration (years)"
+                        SortMemberPath="DurationYears" />
+                    <DataGridTextColumn
+                        Width="90"
+                        Binding="{Binding ProfitabilityYear, StringFormat={}{0:P2}}"
+                        Header="Profitability (year)"
+                        SortMemberPath="ProfitabilityYear">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{Binding ProfitabilityYear, Converter={StaticResource ProfitabilityBrush}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Popup
+                x:Name="ClipboardPopup"
+                AllowsTransparency="True"
+                Placement="Bottom"
+                PlacementTarget="{Binding ElementName=BondsGrid}">
+                <Border
+                    Margin="5"
+                    Padding="5"
+                    Background="#F0F0F0"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    CornerRadius="3">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            Margin="0,0,5,0"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Text="💾" />
+                        <TextBlock x:Name="CopiedValueText" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Border>
+            </Popup>
+
+            <Grid Grid.Row="4" Margin="0,12,0,0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button
+                        Width="120"
+                        Margin="0,0,8,0"
+                        Click="FetchMoex_Click"
+                        Content="Fetch Moex"
+                        Style="{StaticResource SecondaryButtonStyle}" />
+                    <Button
+                        Width="140"
+                        Margin="0,0,8,0"
+                        Click="CalculateMetrics_Click"
+                        Content="Recalculate Metrics"
+                        Style="{StaticResource SecondaryButtonStyle}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button
+                        Width="100"
+                        Margin="0,0,8,0"
+                        Click="Add_Click"
+                        Content="Add"
+                        Style="{StaticResource PrimaryButtonStyle}" />
+                    <Button
+                        Width="100"
+                        Margin="0,0,8,0"
+                        Click="Edit_Click"
+                        Content="Edit"
+                        Style="{StaticResource SecondaryButtonStyle}" />
+                    <Button
+                        Width="100"
+                        Margin="0,0,8,0"
+                        Click="View_Click"
+                        Content="View"
+                        Style="{StaticResource SecondaryButtonStyle}" />
+                    <Button
+                        Width="100"
+                        Click="Delete_Click"
+                        Content="Delete"
+                        Style="{StaticResource SecondaryButtonStyle}" />
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

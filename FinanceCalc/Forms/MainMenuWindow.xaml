@@ -1,0 +1,39 @@
+﻿<Window
+    x:Class="FinanceCalc.Forms.MainMenuWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:FinanceCalc.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Main Menu"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid>
+        <Border
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Style="{StaticResource CardBorderStyle}">
+            <StackPanel
+                Width="200"
+                Margin="10"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center">
+                <Button
+                    Name="DashboardButton"
+                    Margin="20,0,20,10"
+                    HorizontalAlignment="Stretch"
+                    Click="DashboardButton_Click"
+                    Content="Dashboard"
+                    Style="{StaticResource PrimaryButtonStyle}" />
+                <Button
+                    Name="BondsCatalogButton"
+                    Margin="20,0,20,10"
+                    HorizontalAlignment="Stretch"
+                    Click="BondsCatalogButton_Click"
+                    Content="Bonds Catalog"
+                    Style="{StaticResource PrimaryButtonStyle}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

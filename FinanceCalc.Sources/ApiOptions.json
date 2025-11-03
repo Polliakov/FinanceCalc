@@ -1,0 +1,11 @@
+﻿[
+	{
+		"Name": "MOEX",
+		"BaseUrl": "https://iss.moex.com/iss/",
+	},
+	{
+		"Name": "T-Bank",
+		"BaseUrl": "https://www.alphavantage.co/query",
+		"ApiKey": "t.dEesH6tUlZb-1BRWp-OpwQTRzu2gYnC0LTdI-rh3JkIt6SapH1SREz7yw9r0xmcjvJcjPsaSIdCRkyGXMeeLiw"
+	}
+]

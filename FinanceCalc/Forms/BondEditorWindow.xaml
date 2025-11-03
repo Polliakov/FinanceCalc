@@ -1,0 +1,155 @@
+﻿<Window
+    x:Class="FinanceCalc.Forms.BondEditorWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:FinanceCalc.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Bond Editor"
+    Width="550"
+    Height="810"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <converters:ProfitabilityToBrushConverter x:Key="ProfitabilityBrush" />
+    </Window.Resources>
+    <Border Style="{StaticResource CardBorderStyle}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.6*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox
+                        Grid.Column="1"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource TitleTextBoxStyle}"
+                        Text="{Binding Data.Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                        TextAlignment="Center" />
+
+                    <TextBox
+                        Grid.Column="2"
+                        Margin="0"
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        Style="{StaticResource TitleTextBoxStyle}"
+                        Text="{Binding Data.Ticker, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                        TextAlignment="Center" />
+                </Grid>
+                <UniformGrid
+                    Margin="0"
+                    HorizontalAlignment="Stretch"
+                    Columns="2"
+                    Rows="4">
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Nominal:" />
+                    <TextBox Style="{StaticResource FormInputField}" Text="{Binding Data.Nominal, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat={}{0:N2}}" />
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Cost:" />
+                    <TextBox Style="{StaticResource FormInputField}" Text="{Binding Data.Cost, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat={}{0:N2}}" />
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Capital Profitability:" />
+                    <TextBox
+                        Foreground="{Binding Computed.CapitalProfitability, Converter={StaticResource ProfitabilityBrush}}"
+                        Style="{StaticResource FormInfoField}"
+                        Text="{Binding Computed.CapitalProfitability, Mode=OneWay}" />
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Capital Profitability / Year:" />
+                    <TextBox
+                        Foreground="{Binding Computed.CapitalProfitabilityYear, Converter={StaticResource ProfitabilityBrush}}"
+                        Style="{StaticResource FormInfoField}"
+                        Text="{Binding Computed.CapitalProfitabilityYear, Mode=OneWay}" />
+
+                </UniformGrid>
+                <Separator Margin="0,5,0,5" Foreground="#8A8A8A" />
+                <UniformGrid
+                    Margin="0"
+                    HorizontalAlignment="Stretch"
+                    Columns="2"
+                    Rows="5">
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Coupon:" />
+                    <TextBox Style="{StaticResource FormInputField}" Text="{Binding Data.Coupon, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat={}{0:N2}}" />
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Coupons per Year:" />
+                    <TextBox Style="{StaticResource FormInputField}" Text="{Binding Data.CouponsPerYear, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Coupons Period (months):" />
+                    <TextBox Style="{StaticResource FormInfoField}" Text="{Binding Computed.CouponsPeriodMonths, StringFormat={}{0:F1}, Mode=OneWay}" />
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Coupon Profitability:" />
+                    <TextBox
+                        Foreground="{Binding Computed.CouponProfitability, Converter={StaticResource ProfitabilityBrush}}"
+                        Style="{StaticResource FormInfoField}"
+                        Text="{Binding Computed.CouponProfitability, Mode=OneWay}" />
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Coupon Profitability / Year:" />
+                    <TextBox
+                        Foreground="{Binding Computed.CouponProfitabilityYear, Converter={StaticResource ProfitabilityBrush}}"
+                        Style="{StaticResource FormInfoField}"
+                        Text="{Binding Computed.CouponProfitabilityYear, Mode=OneWay}" />
+
+                </UniformGrid>
+                <Separator Margin="0,5,0,5" Foreground="#8A8A8A" />
+                <UniformGrid
+                    Margin="0"
+                    HorizontalAlignment="Stretch"
+                    Columns="2"
+                    Rows="3">
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Start Date:" />
+                    <DatePicker SelectedDate="{Binding Data.DateStart, Mode=TwoWay}" Style="{StaticResource InputDatePickerStyle}" />
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="End Date:" />
+                    <DatePicker SelectedDate="{Binding Data.DateEnd, Mode=TwoWay}" Style="{StaticResource InputDatePickerStyle}" />
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Duration (years):" />
+                    <TextBox
+                        Foreground="{Binding Computed.CapitalProfitability}"
+                        Style="{StaticResource FormInfoField}"
+                        Text="{Binding Computed.DurationYears, Mode=OneWay, StringFormat={}{0:F2}}" />
+
+                </UniformGrid>
+                <Separator Margin="0,5,0,5" Foreground="#8A8A8A" />
+                <UniformGrid
+                    Margin="0"
+                    HorizontalAlignment="Stretch"
+                    Columns="2"
+                    Rows="1">
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Total Profitability / Year:" />
+                    <TextBox
+                        Foreground="{Binding Computed.ProfitabilityYear, Converter={StaticResource ProfitabilityBrush}}"
+                        Style="{StaticResource FormInfoField}"
+                        Text="{Binding Computed.ProfitabilityYear, Mode=OneWay}" />
+
+                </UniformGrid>
+                <Separator Margin="0,5,0,15" Foreground="#8A8A8A" />
+                <StackPanel
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Button
+                        Width="120"
+                        Height="34"
+                        Margin="0,0,8,0"
+                        Padding="8,4"
+                        Click="Cancel_Click"
+                        Content="Cancel"
+                        Style="{StaticResource SecondaryButtonStyle}" />
+                    <Button
+                        Width="120"
+                        Height="34"
+                        Padding="8,4"
+                        Click="Save_Click"
+                        Content="Save"
+                        Style="{StaticResource PrimaryButtonStyle}" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</Window>
