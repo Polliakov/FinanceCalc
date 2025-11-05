@@ -38,7 +38,17 @@ namespace FinanceCalc.Persistence.Configurations
                 .IsRequired(false);
 
             builder
+                .Property(b => b.AccumulatedCouponIncome)
+                .HasPrecision(16, 6)
+                .IsRequired(false);
+
+            builder
                 .Property(b => b.CouponsPerYear)
+                .IsRequired(false);
+
+            builder
+                .Property(b => b.NextCouponDate)
+                .HasColumnType("timestamp with time zone")
                 .IsRequired(false);
 
             builder

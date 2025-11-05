@@ -8,6 +8,7 @@ namespace FinanceCalc.Domain.Abstractions
         new decimal Cost { get; set; }
         new decimal? Coupon { get; set; }
         new int? CouponsPerYear { get; set; }
+        new DateTime? NextCouponDate { get; set; }
         new DateTime DateStart { get; set; }
         new DateTime DateEnd { get; set; }
         new DateTime? OfferDate { get; set; }

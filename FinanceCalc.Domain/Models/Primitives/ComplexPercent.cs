@@ -1,11 +1,9 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace FinanceCalc.Domain.Models.Primitives
+﻿namespace FinanceCalc.Domain.Models.Primitives
 {
     public class ComplexPercent(decimal value, double period)
     {
         public decimal Value { get; protected set; } = value;
-        public double Period { get; protected set; } = period;
+        public double Period { get; protected set; } = double.IsInfinity(period) ? 1 : period;
 
         public ComplexPercent SetValue(decimal value)
         {
@@ -19,7 +17,12 @@ namespace FinanceCalc.Domain.Models.Primitives
 
         public virtual ComplexPercent WithPeriod(double period)
         {
-            return new(Scale(Value, period / Period), period);
+            return new(Period != 0 ? Scale(Value, period / Period) : Value, period);
+        }
+
+        public virtual decimal AsSimplePercent(double period = 1)
+        {
+            return WithPeriod(period).Value * (decimal)Period;
         }
 
         /// <summary>
@@ -27,12 +30,13 @@ namespace FinanceCalc.Domain.Models.Primitives
         /// </summary>
         public static decimal Scale(decimal percent, double scale)
         {
-            return (decimal)Math.Pow(1.0 + (double)percent, scale) - 1;
+            return (decimal)Math.Clamp(
+                Math.Pow(1.0 + (double)percent, scale), double.MinValue, double.MaxValue) - 1;
         }
 
         protected decimal ScaleTo(decimal percent, double period)
         {
-            return Scale(percent, period / Period);
+            return Period != 0 ? Scale(percent, period / Period) : percent;
         }
 
         private static readonly ComplexPercent _empty = new(0, 1);

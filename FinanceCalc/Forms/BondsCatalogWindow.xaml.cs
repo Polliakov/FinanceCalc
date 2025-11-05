@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Threading;
 using static FinanceCalc.Utils.Compare;
 using System.Globalization;
 

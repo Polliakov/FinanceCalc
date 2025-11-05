@@ -5,10 +5,9 @@
     xmlns:converters="clr-namespace:FinanceCalc.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModels="clr-namespace:FinanceCalc.ViewModels"
     Title="Bond Overview"
-    Width="550"
-    Height="640"
+    Width="460"
+    Height="685"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -45,6 +44,8 @@
                         Text="{Binding Ticker, Mode=OneWay}"
                         TextAlignment="Center" />
                 </Grid>
+
+                <!--  General  -->
                 <UniformGrid
                     Margin="0"
                     HorizontalAlignment="Stretch"
@@ -70,21 +71,30 @@
                         Text="{Binding CapitalProfitabilityYear, Mode=OneWay}" />
 
                 </UniformGrid>
+
                 <Separator Margin="0,5,0,5" Foreground="#8A8A8A" />
+
+                <!--  Coupon block  -->
                 <UniformGrid
                     Margin="0"
                     HorizontalAlignment="Stretch"
                     Columns="2"
-                    Rows="5">
+                    Rows="7">
 
                     <TextBox Style="{StaticResource FormLabelField}" Text="Coupon:" />
                     <TextBox Style="{StaticResource FormInfoField}" Text="{Binding Coupon, StringFormat={}{0:N2}, Mode=OneWay}" />
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Accumulated Coupon Income:" />
+                    <TextBox Style="{StaticResource FormInfoField}" Text="{Binding AccumulatedCouponIncome, StringFormat={}{0:N2}, Mode=OneWay}" />
 
                     <TextBox Style="{StaticResource FormLabelField}" Text="Coupons per Year:" />
                     <TextBox Style="{StaticResource FormInfoField}" Text="{Binding CouponsPerYear, Mode=OneWay}" />
 
                     <TextBox Style="{StaticResource FormLabelField}" Text="Coupons Period (months):" />
                     <TextBox Style="{StaticResource FormInfoField}" Text="{Binding CouponsPeriodMonths, StringFormat={}{0:F1}, Mode=OneWay}" />
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Next Coupon Date:" />
+                    <TextBox Style="{StaticResource FormInfoField}" Text="{Binding NextCouponDate, StringFormat={}{0:yyyy-MM-dd}, Mode=OneWay}" />
 
                     <TextBox Style="{StaticResource FormLabelField}" Text="Coupon Profitability:" />
                     <TextBox
@@ -99,12 +109,15 @@
                         Text="{Binding CouponProfitabilityYear, Mode=OneWay}" />
 
                 </UniformGrid>
+
                 <Separator Margin="0,5,0,5" Foreground="#8A8A8A" />
+
+                <!--  Dates  -->
                 <UniformGrid
                     Margin="0"
                     HorizontalAlignment="Stretch"
                     Columns="2"
-                    Rows="3">
+                    Rows="4">
 
                     <TextBox Style="{StaticResource FormLabelField}" Text="Start Date:" />
                     <TextBox Style="{StaticResource FormInfoField}" Text="{Binding DateStart, StringFormat={}{0:yyyy-MM-dd}, Mode=OneWay}" />
@@ -112,11 +125,17 @@
                     <TextBox Style="{StaticResource FormLabelField}" Text="End Date:" />
                     <TextBox Style="{StaticResource FormInfoField}" Text="{Binding DateEnd, StringFormat={}{0:yyyy-MM-dd}, Mode=OneWay}" />
 
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Offer Date:" />
+                    <TextBox Style="{StaticResource FormInfoField}" Text="{Binding OfferDate, StringFormat={}{0:yyyy-MM-dd}, Mode=OneWay}" />
+
                     <TextBox Style="{StaticResource FormLabelField}" Text="Duration (years):" />
                     <TextBox Style="{StaticResource FormInfoField}" Text="{Binding DurationYears, StringFormat={}{0:F2}, Mode=OneWay}" />
 
                 </UniformGrid>
+
                 <Separator Margin="0,5,0,5" Foreground="#8A8A8A" />
+
+                <!--  Total  -->
                 <UniformGrid
                     Margin="0"
                     HorizontalAlignment="Stretch"
@@ -130,6 +149,7 @@
                         Text="{Binding ProfitabilityYear, Mode=OneWay}" />
 
                 </UniformGrid>
+
                 <Separator Margin="0,5,0,20" Foreground="#8A8A8A" />
                 <Button
                     Width="120"

@@ -375,15 +375,15 @@
                         Binding="{Binding Ticker}"
                         Header="Ticker" />
                     <DataGridTextColumn
-                        Width="100"
+                        Width="110"
                         Binding="{Binding Cost, StringFormat={}{0:N2}}"
                         Header="Cost" />
                     <DataGridTextColumn
-                        Width="100"
+                        Width="80"
                         Binding="{Binding ., Converter={StaticResource CostToPercentConverter}}"
                         Header="Cost (%)" />
                     <DataGridTextColumn
-                        Width="100"
+                        Width="110"
                         Binding="{Binding Nominal, StringFormat={}{0:N2}}"
                         Header="Nominal" />
                     <DataGridTextColumn
@@ -409,9 +409,13 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn
-                        Width="80"
+                        Width="90"
                         Binding="{Binding Coupon, StringFormat={}{0:N2}}"
                         Header="Coupon" />
+                    <DataGridTextColumn
+                        Width="90"
+                        Binding="{Binding AccumulatedCouponIncome, StringFormat={}{0:N2}}"
+                        Header="ACI" />
                     <DataGridTextColumn
                         Width="75"
                         Binding="{Binding CouponsPerYear}"

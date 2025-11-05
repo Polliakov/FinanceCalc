@@ -49,9 +49,16 @@ namespace FinanceCalc.Persistence.Repositories
 
                 var entities = bondsData.Select(bondData =>
                 {
-                    var bond = new Bond(bondData);
-                    var entity = BondMapper.ToEntity(bond);
-                    return entity;
+                    try
+                    {
+                        var bond = new Bond(bondData);
+                        var entity = BondMapper.ToEntity(bond);
+                        return entity;
+                    }
+                    catch
+                    {
+                        return null;
+                    }
                 });
                 await _context.Bonds.AddRangeAsync(entities!);
                 await _context.SaveChangesAsync();

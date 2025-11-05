@@ -9,7 +9,9 @@ namespace FinanceCalc.Domain.Entities
         public required decimal Nominal { get; set; }
         public required decimal Cost { get; set; }
         public decimal? Coupon { get; set; }
+        public decimal? AccumulatedCouponIncome { get; set; }
         public int? CouponsPerYear { get; set; }
+        public DateTime? NextCouponDate { get; set; }
         public required DateTime DateStart { get; set; }
         public required DateTime DateEnd { get; set; }
         public DateTime? OfferDate { get; set; }

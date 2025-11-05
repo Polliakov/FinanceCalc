@@ -4,10 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:FinanceCalc.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:viewmodels="clr-namespace:FinanceCalc.ViewModels" 
+    d:DataContext="{d:DesignInstance Type=viewmodels:BondEditorViewModel}"
     Title="Bond Editor"
-    Width="550"
-    Height="810"
+    Width="460"
+    Height="885"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -40,6 +42,7 @@
                         Text="{Binding Data.Ticker, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                         TextAlignment="Center" />
                 </Grid>
+                <!--  General  -->
                 <UniformGrid
                     Margin="0"
                     HorizontalAlignment="Stretch"
@@ -66,6 +69,7 @@
 
                 </UniformGrid>
                 <Separator Margin="0,5,0,5" Foreground="#8A8A8A" />
+                <!--  Coupon / Income  -->
                 <UniformGrid
                     Margin="0"
                     HorizontalAlignment="Stretch"
@@ -81,11 +85,8 @@
                     <TextBox Style="{StaticResource FormLabelField}" Text="Coupons Period (months):" />
                     <TextBox Style="{StaticResource FormInfoField}" Text="{Binding Computed.CouponsPeriodMonths, StringFormat={}{0:F1}, Mode=OneWay}" />
 
-                    <TextBox Style="{StaticResource FormLabelField}" Text="Coupon Profitability:" />
-                    <TextBox
-                        Foreground="{Binding Computed.CouponProfitability, Converter={StaticResource ProfitabilityBrush}}"
-                        Style="{StaticResource FormInfoField}"
-                        Text="{Binding Computed.CouponProfitability, Mode=OneWay}" />
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Accumulated Coupon Income:" />
+                    <TextBox Style="{StaticResource FormInfoField}" Text="{Binding Computed.AccumulatedCouponIncome, Mode=OneWay, StringFormat={}{0:N2}}" />
 
                     <TextBox Style="{StaticResource FormLabelField}" Text="Coupon Profitability / Year:" />
                     <TextBox
@@ -99,7 +100,7 @@
                     Margin="0"
                     HorizontalAlignment="Stretch"
                     Columns="2"
-                    Rows="3">
+                    Rows="5">
 
                     <TextBox Style="{StaticResource FormLabelField}" Text="Start Date:" />
                     <DatePicker SelectedDate="{Binding Data.DateStart, Mode=TwoWay}" Style="{StaticResource InputDatePickerStyle}" />
@@ -107,14 +108,21 @@
                     <TextBox Style="{StaticResource FormLabelField}" Text="End Date:" />
                     <DatePicker SelectedDate="{Binding Data.DateEnd, Mode=TwoWay}" Style="{StaticResource InputDatePickerStyle}" />
 
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Next Coupon Date:" />
+                    <DatePicker SelectedDate="{Binding Data.NextCouponDate, Mode=TwoWay}" Style="{StaticResource InputDatePickerStyle}" />
+
+                    <TextBox Style="{StaticResource FormLabelField}" Text="Offer Date:" />
+                    <DatePicker SelectedDate="{Binding Data.OfferDate, Mode=TwoWay}" Style="{StaticResource InputDatePickerStyle}" />
+
                     <TextBox Style="{StaticResource FormLabelField}" Text="Duration (years):" />
                     <TextBox
-                        Foreground="{Binding Computed.CapitalProfitability}"
+                        Foreground="{Binding Computed.CapitalProfitability, Converter={StaticResource ProfitabilityBrush}}"
                         Style="{StaticResource FormInfoField}"
                         Text="{Binding Computed.DurationYears, Mode=OneWay, StringFormat={}{0:F2}}" />
 
                 </UniformGrid>
                 <Separator Margin="0,5,0,5" Foreground="#8A8A8A" />
+                <!--  Total profitability  -->
                 <UniformGrid
                     Margin="0"
                     HorizontalAlignment="Stretch"
@@ -129,6 +137,7 @@
 
                 </UniformGrid>
                 <Separator Margin="0,5,0,15" Foreground="#8A8A8A" />
+                <!--  Buttons  -->
                 <StackPanel
                     Margin="0,0,0,0"
                     HorizontalAlignment="Center"

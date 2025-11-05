@@ -12,6 +12,7 @@ namespace FinanceCalc.ViewModels
         private decimal _cost;
         private decimal? _coupon;
         private int? _couponsPerYear;
+        private DateTime? _nextCouponDate;
         private DateTime _dateStart = DateTime.Today;
         private DateTime _dateEnd = DateTime.Today;
         private DateTime? _offerDate;
@@ -69,6 +70,12 @@ namespace FinanceCalc.ViewModels
         {
             get => _couponsPerYear;
             set => SetField(ref _couponsPerYear, value);
+        }
+
+        public DateTime? NextCouponDate
+        {
+            get => _nextCouponDate;
+            set => SetField(ref _nextCouponDate, value);
         }
 
         public DateTime DateStart

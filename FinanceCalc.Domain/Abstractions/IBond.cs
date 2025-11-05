@@ -4,6 +4,7 @@ namespace FinanceCalc.Domain.Abstractions
     {
         double DurationYears { get; }
         double? CouponsPeriodMonths { get; }
+        decimal? AccumulatedCouponIncome { get; }
         decimal? CouponProfitability { get; }
         decimal? CouponProfitabilityYear { get; }
         decimal CapitalProfitability { get; }

@@ -10,6 +10,7 @@ namespace FinanceCalc.Domain.Models
         public required decimal Cost { get; set; }
         public decimal? Coupon { get; set; }
         public int? CouponsPerYear { get; set; }
+        public DateTime? NextCouponDate { get; set; }
         public required DateTime DateStart { get; set; }
         public required DateTime DateEnd { get; set; }
         public DateTime? OfferDate { get; set; }
