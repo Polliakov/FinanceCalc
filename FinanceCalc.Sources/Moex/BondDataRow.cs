@@ -13,5 +13,6 @@
         public DateTime? NextCoupon { get; set; }
         public DateTime? MatDate { get; set; }
         public DateTime? OfferDate { get; set; }
+        public bool? QualifiedRequired { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using FinanceCalc.Domain.Abstractions;
 using FinanceCalc.Domain.Models;
+using FinanceCalc.Domain.Models.Bonds;
 
 namespace FinanceCalc.Application.Catalog.Services
 {
@@ -12,6 +13,7 @@ namespace FinanceCalc.Application.Catalog.Services
         Task UpdateAsync(IReadOnlyBondData bond);
         Task<int> ImportFromMoex(CancellationToken cancellationToken = default);
         Task<BondMetrics> CalculateMetricsAsync(int precision, CancellationToken cancellationToken = default);
+        Task<BondsMetadata> GetMetadataAsync(CancellationToken cancellationToken = default);
         Task SaveMetricsAsync(BondMetrics metrics, CancellationToken cancellationToken = default);
         Task<BondMetrics?> GetLastMetricsAsync(CancellationToken cancellationToken = default);
     }

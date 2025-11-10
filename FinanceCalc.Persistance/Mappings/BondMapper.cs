@@ -27,6 +27,8 @@ namespace FinanceCalc.Domain.Mappings
                 CouponsPeriodMonths = bond.CouponsPeriodMonths,
                 CouponProfitability = bond.CouponProfitability,
                 CouponProfitabilityYear = bond.CouponProfitabilityYear,
+                Relevance = bond.Relevance,
+                NeedQualification = bond.NeedQualification,
             }
             : null;
         }

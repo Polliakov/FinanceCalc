@@ -7,12 +7,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Bonds Catalog"
-    Width="1720"
+    Width="1820"
     Height="800"
     mc:Ignorable="d">
     <Window.Resources>
         <converters:ProfitabilityToBrushConverter x:Key="ProfitabilityBrush" />
-        <converters:CostToPercentConverter x:Key="CostToPercentConverter" />
     </Window.Resources>
     <Border Style="{StaticResource CardBorderStyle}">
         <Grid>
@@ -311,16 +310,38 @@
                             TextChanged="Filter_TextChanged"
                             ToolTip="With maximum duration." />
 
-                        <!--  Has Offer  -->
-                        <CheckBox
-                            Name="NoOfferFilter"
+                        <Grid
                             Grid.Row="0"
+                            Grid.RowSpan="2"
                             Grid.Column="5"
-                            Margin="12,0,0,0"
-                            VerticalAlignment="Center"
-                            Checked="Filter_TextChanged"
-                            Content="No Offer"
-                            Unchecked="Filter_TextChanged" />
+                            MaxWidth="1000">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <!--  Has Offer  -->
+                            <CheckBox
+                                Name="NoOfferFilter"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="12,0,0,0"
+                                VerticalAlignment="Center"
+                                Checked="Filter_TextChanged"
+                                Content="No Offer"
+                                Unchecked="Filter_TextChanged" />
+                            <!--  Need Qualification  -->
+                            <CheckBox
+                                Name="NeedQualificationFilter"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="12,0,0,0"
+                                VerticalAlignment="Center"
+                                Checked="Filter_TextChanged"
+                                Content="Need Qualification"
+                                Unchecked="Filter_TextChanged" />
+
+                        </Grid>
 
                     </Grid>
                 </GroupBox>
@@ -380,7 +401,7 @@
                         Header="Cost" />
                     <DataGridTextColumn
                         Width="80"
-                        Binding="{Binding ., Converter={StaticResource CostToPercentConverter}}"
+                        Binding="{Binding CostPercent, StringFormat={}{0:P2}}"
                         Header="Cost (%)" />
                     <DataGridTextColumn
                         Width="110"
@@ -470,6 +491,10 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
+                    <DataGridTextColumn
+                        Width="80"
+                        Binding="{Binding Relevance, StringFormat={}{0:N2}}"
+                        Header="Relevance" />
                 </DataGrid.Columns>
             </DataGrid>
 

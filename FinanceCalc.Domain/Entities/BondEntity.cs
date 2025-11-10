@@ -1,4 +1,5 @@
 using FinanceCalc.Domain.Abstractions;
+using FinanceCalc.Domain.Models.Bonds;
 
 namespace FinanceCalc.Domain.Entities
 {
@@ -22,6 +23,11 @@ namespace FinanceCalc.Domain.Entities
         public required decimal CapitalProfitability { get; set; }
         public required decimal CapitalProfitabilityYear { get; set; }
         public required decimal ProfitabilityYear { get; set; }
+        public double? Relevance { get; set; }
+        public bool NeedQualification { get; set; }
+
+        // For view. Not stored in DB.
+        public decimal CostPercent => Nominal <= 0 ? 1 : Cost / Nominal;
 
         public object Clone()
         {

@@ -1,5 +1,5 @@
 ﻿using FinanceCalc.Domain.Abstractions;
-using FinanceCalc.Domain.Models;
+using FinanceCalc.Domain.Models.Bonds;
 
 namespace FinanceCalc.Domain.Extensions
 {

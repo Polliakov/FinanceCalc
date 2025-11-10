@@ -1,6 +1,6 @@
 ﻿using FinanceCalc.Domain.Abstractions;
 
-namespace FinanceCalc.Domain.Models
+namespace FinanceCalc.Domain.Models.Bonds
 {
     public class BondData : IBondData
     {
@@ -14,6 +14,7 @@ namespace FinanceCalc.Domain.Models
         public required DateTime DateStart { get; set; }
         public required DateTime DateEnd { get; set; }
         public DateTime? OfferDate { get; set; }
+        public bool NeedQualification { get; set; }
 
         public object Clone()
         {

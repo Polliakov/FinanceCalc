@@ -15,7 +15,7 @@ namespace FinanceCalc.Persistence
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseNpgsql("Server=127.0.0.1;Port=5432;Database=FinanceCalc;User Id=FinanceCalcApp;Password=FinanceCalcApp;");
+                options.UseNpgsql("Server=127.0.0.1;Port=5432;Database=FinanceCalc;User Id=FinanceCalcApp;Password=FinanceCalcApp;Include Error Detail=True");
             });
             services.AddTransient<DbInitializer>();
 

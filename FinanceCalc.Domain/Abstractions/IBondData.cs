@@ -12,5 +12,6 @@ namespace FinanceCalc.Domain.Abstractions
         new DateTime DateStart { get; set; }
         new DateTime DateEnd { get; set; }
         new DateTime? OfferDate { get; set; }
+        new bool NeedQualification { get; set; }
     }
 }

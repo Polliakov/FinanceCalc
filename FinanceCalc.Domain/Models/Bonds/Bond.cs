@@ -1,13 +1,13 @@
 ﻿using FinanceCalc.Domain.Abstractions;
 using FinanceCalc.Domain.Models.Primitives;
 
-namespace FinanceCalc.Domain.Models
+namespace FinanceCalc.Domain.Models.Bonds
 {
     public class Bond : IBond
     {
         public Bond() : this(new BondData
         {
-            Name = "Селигдар 001Р-03",
+            Name = "Селигдар001Р-03",
             Ticker = "RU000A10B933",
             Cost = 1097.4m,
             Nominal = 1000,
@@ -29,12 +29,12 @@ namespace FinanceCalc.Domain.Models
             DurationYears = Math.Max(0, (DateEnd - DateStart).TotalDays / 365);
             OfferDate = data.OfferDate;
             NextCouponDate = data.NextCouponDate;
+            NeedQualification = data.NeedQualification;
 
             if (Cost > 0 &&
-                data.Coupon is { } coupon && coupon > 0 &&
-                data.CouponsPerYear is { } couponsPerYear && couponsPerYear > 0)
+            data.Coupon is { } coupon && coupon > 0 &&
+            data.CouponsPerYear is { } couponsPerYear && couponsPerYear > 0)
             {
-
                 Coupon = coupon;
                 CouponsPerYear = couponsPerYear;
                 CouponsPeriodMonths = 12.0 / couponsPerYear;
@@ -44,15 +44,12 @@ namespace FinanceCalc.Domain.Models
                 {
                     var couponsPeriodDays = 365.0 / couponsPerYear;
                     // Dummy year rate for accumulated income calculation.
-                    AccumulatedCouponIncome = Coupon * 
-                        (decimal)((DateTime.UtcNow.Date -
-                            NextCouponDate!.Value.Date.AddDays(-couponsPeriodDays)).TotalDays
-                        / couponsPeriodDays);
+                    AccumulatedCouponIncome = Coupon * (decimal)((DateTime.UtcNow.Date - NextCouponDate!.Value.Date.AddDays(-couponsPeriodDays)).TotalDays / couponsPeriodDays);
                 }
             }
             if (Cost > 0)
             {
-                CapitalProfitability = new ComplexPercent((Nominal - Cost) / Cost, (double)DurationYears);
+                CapitalProfitability = new ComplexPercent((Nominal - Cost) / Cost, DurationYears);
                 CapitalProfitabilityYear = CapitalProfitability.WithPeriod(1).SetPeriod(12);
             }
             else
@@ -81,6 +78,8 @@ namespace FinanceCalc.Domain.Models
         public ComplexPercent CapitalProfitability { get; private set; }
         public ComplexPercent CapitalProfitabilityYear { get; private set; }
         public ComplexPercent ProfitabilityYear { get; private set; }
+        public double? Relevance { get; set; }
+        public bool NeedQualification { get; private set; }
 
         decimal? IBond.AccumulatedCouponIncome => AccumulatedCouponIncome!;
         decimal? IBond.CouponProfitability => CouponProfitability!;
@@ -103,7 +102,11 @@ namespace FinanceCalc.Domain.Models
                 DateStart = DateStart,
                 DateEnd = DateEnd,
                 OfferDate = OfferDate,
-            });
+                NeedQualification = NeedQualification,
+            })
+            {
+                Relevance = Relevance,
+            };
         }
     }
 }

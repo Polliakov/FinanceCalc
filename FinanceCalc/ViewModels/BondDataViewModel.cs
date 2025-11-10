@@ -16,6 +16,7 @@ namespace FinanceCalc.ViewModels
         private DateTime _dateStart = DateTime.Today;
         private DateTime _dateEnd = DateTime.Today;
         private DateTime? _offerDate;
+        private bool _needQualification;    
 
         public BondDataViewModel() { }
 
@@ -30,6 +31,7 @@ namespace FinanceCalc.ViewModels
             _dateStart = source.DateStart;
             _dateEnd = source.DateEnd;
             _offerDate = source.OfferDate;
+            _needQualification = source.NeedQualification;
             if (editAction is not null)
             {
                 PropertyChanged += editAction;
@@ -94,6 +96,12 @@ namespace FinanceCalc.ViewModels
         {
             get => _offerDate;
             set => SetField(ref _offerDate, value);
+        }
+
+        public bool NeedQualification
+        {
+            get => _needQualification;
+            set => SetField(ref _needQualification, value);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -1,4 +1,5 @@
 ﻿using FinanceCalc.Domain.Abstractions;
+using FinanceCalc.Domain.Models.Bonds;
 
 namespace FinanceCalc.Application.Catalog.Repositories.Abstractions
 {
@@ -10,5 +11,6 @@ namespace FinanceCalc.Application.Catalog.Repositories.Abstractions
         Task<IBond?> GetByIdAsync(string ticker);
         Task UpdateAsync(IReadOnlyBondData bondData);
         Task SetRangeAsync(IEnumerable<IReadOnlyBondData> bondsData);
+        Task<BondsMetadata?> GetMetadataAsync(CancellationToken cancellationToken = default);
     }
 }

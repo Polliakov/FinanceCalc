@@ -98,6 +98,10 @@ namespace FinanceCalc.Persistence.Configurations
                 .Property(b => b.ProfitabilityYear)
                 .HasPrecision(10, 5)
                 .IsRequired();
+
+            builder
+                .Property(b => b.NeedQualification)
+                .IsRequired();
         }
     }
 }

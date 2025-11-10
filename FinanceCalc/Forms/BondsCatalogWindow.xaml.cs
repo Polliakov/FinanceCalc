@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using static FinanceCalc.Utils.Compare;
 using System.Globalization;
+using FinanceCalc.Domain.Models.Bonds;
 
 namespace FinanceCalc.Forms
 {
@@ -31,20 +32,24 @@ namespace FinanceCalc.Forms
         private async void BondsCatalogWindow_Loaded(object? sender, RoutedEventArgs e)
         {
             await ReloadAsync();
-            //await LoadMetricsAsync();
         }
 
         private async Task ReloadAsync()
         {
             try
             {
-                _allItems = (await _service.GetAllAsync()).ToList();
+                _allItems = [.. await _service.GetAllAsync()];
+
+                var context = await _service.GetMetadataAsync(_cts.Token);
+                new BondRelevanceResolver().CalculateRelevance(_allItems, context);
+
                 UpdateCounts();
                 _view = CollectionViewSource.GetDefaultView(_allItems);
                 _view.Filter = FilterPredicate;
                 BondsGrid.ItemsSource = _view;
                 UpdateFoundCount();
             }
+            catch (OperationCanceledException) { }
             catch (Exception ex)
             {
                 MessageBox.Show(this, $"Error loading bonds: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -72,10 +77,10 @@ namespace FinanceCalc.Forms
 
         private bool FilterPredicate(object obj)
         {
-            if (obj is not IBond bond)
+            if (obj is not IBond bond) 
                 return false;
-
             var noOfferFilter = (FindName("NoOfferFilter") as CheckBox)?.IsChecked;
+            var needQualificationFilter = (FindName("NeedQualificationFilter") as CheckBox)?.IsChecked;
 
             var durationMin = ParseDoubleFieldOrNull("DurationFilterMinBox") ?? 0;
             var durationMax = ParseDoubleFieldOrNull("DurationFilterMaxBox");
@@ -96,7 +101,7 @@ namespace FinanceCalc.Forms
                     profMax += (profPerDurationMax - profMax) * durationKoef;
             }
 
-            return
+            bool passes =
                 Like(FilterText("NameFilterBox"), bond.Name) &&
                 Like(FilterText("TickerFilterBox"), bond.Ticker) &&
                 InRangeDecimal(FilterText("NominalFilterMinBox"), FilterText("NominalFilterMaxBox"), bond.Nominal) &&
@@ -107,7 +112,10 @@ namespace FinanceCalc.Forms
                 InRangeNullableDecimal(FilterText("CouponProfYearFilterMinBox"), FilterText("CouponProfYearFilterMaxBox"), bond.CouponProfitabilityYear * 100) &&
                 InRangeNullableDouble(durationMin, durationMax, bond.DurationYears) &&
                 InRangeNullableDouble(profMin, profMax, (double)bond.ProfitabilityYear * 100) &&
-                (noOfferFilter != true || !bond.OfferDate.HasValue);
+                (noOfferFilter != true || !bond.OfferDate.HasValue) &&
+                (needQualificationFilter != true || bond.NeedQualification);
+
+            return passes;
 
             double? ParseDoubleFieldOrNull(string fieldName)
             {

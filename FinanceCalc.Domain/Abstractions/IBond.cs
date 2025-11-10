@@ -10,5 +10,6 @@ namespace FinanceCalc.Domain.Abstractions
         decimal CapitalProfitability { get; }
         decimal CapitalProfitabilityYear { get; }
         decimal ProfitabilityYear { get; }
+        double? Relevance { get; set; }
     }
 }

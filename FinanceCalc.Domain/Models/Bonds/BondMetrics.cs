@@ -1,3 +1,4 @@
+using FinanceCalc.Domain.Models.Bonds;
 using FinanceCalc.Domain.Models.Primitives;
 
 namespace FinanceCalc.Domain.Models

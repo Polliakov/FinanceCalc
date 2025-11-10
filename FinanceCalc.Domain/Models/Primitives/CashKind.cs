@@ -1,4 +1,4 @@
-﻿namespace FinanceCalc.Domain
+﻿namespace FinanceCalc.Domain.Models.Primitives
 {
     public enum CashKind
     {

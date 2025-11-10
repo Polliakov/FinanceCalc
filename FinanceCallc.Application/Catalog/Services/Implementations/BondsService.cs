@@ -3,6 +3,7 @@ using FinanceCalc.Application.Catalog.Repositories.Abstractions;
 using FinanceCalc.Application.Extensions.MathNet;
 using FinanceCalc.Domain.Abstractions;
 using FinanceCalc.Domain.Models;
+using FinanceCalc.Domain.Models.Bonds;
 using MathNet.Numerics.Statistics;
 
 namespace FinanceCalc.Application.Catalog.Services.Implementations
@@ -10,7 +11,8 @@ namespace FinanceCalc.Application.Catalog.Services.Implementations
     public class BondsService(
         IBondsRepository bondsRepository,
         IBondsDataSource dataSource,
-        IBondMetricsRepository bondMetricsRepository) : IBondsService
+        IBondMetricsRepository bondMetricsRepository)
+        : IBondsService
     {
         private readonly IBondsRepository _bondsRepository = bondsRepository;
         private readonly IBondsDataSource _dataSource = dataSource;
@@ -75,6 +77,11 @@ namespace FinanceCalc.Application.Catalog.Services.Implementations
         public async Task<BondMetrics?> GetLastMetricsAsync(CancellationToken cancellationToken = default)
         {
             return await _bondMetricsRepository.GetLastAsync(cancellationToken);
+        }
+
+        public async Task<BondsMetadata> GetMetadataAsync(CancellationToken cancellationToken = default)
+        {
+            return await _bondsRepository.GetMetadataAsync(cancellationToken);
         }
     }
 }

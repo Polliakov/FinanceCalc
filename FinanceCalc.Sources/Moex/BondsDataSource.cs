@@ -1,6 +1,6 @@
 ﻿using FinanceCalc.Application.Catalog.DataSources.Abstractions;
 using FinanceCalc.Domain.Abstractions;
-using FinanceCalc.Domain.Models;
+using FinanceCalc.Domain.Models.Bonds;
 using System.Text.Json;
 
 namespace FinanceCalc.Sources.Moex
@@ -46,6 +46,7 @@ namespace FinanceCalc.Sources.Moex
                     DateStart = DateTime.UtcNow,
                     DateEnd = row.MatDate ?? DateTime.UtcNow.AddYears(1),
                     OfferDate = row.OfferDate,
+                    NeedQualification = row.QualifiedRequired ?? false,
                 };
                 bondData.Add(bond);
             }
