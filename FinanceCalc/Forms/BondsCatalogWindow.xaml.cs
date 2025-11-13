@@ -41,7 +41,7 @@ namespace FinanceCalc.Forms
                 _allItems = [.. await _service.GetAllAsync()];
 
                 var context = await _service.GetMetadataAsync(_cts.Token);
-                new BondRelevanceResolver().CalculateRelevance(_allItems, context);
+                new SimpleRelevanceResolver().CalculateRelevance(_allItems, context);
 
                 UpdateCounts();
                 _view = CollectionViewSource.GetDefaultView(_allItems);

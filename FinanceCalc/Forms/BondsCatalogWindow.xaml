@@ -493,7 +493,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn
                         Width="80"
-                        Binding="{Binding Relevance, StringFormat={}{0:N2}}"
+                        Binding="{Binding Relevance, StringFormat={}{0:N3}}"
                         Header="Relevance" />
                 </DataGrid.Columns>
             </DataGrid>
