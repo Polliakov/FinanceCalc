@@ -14,7 +14,6 @@ namespace FinanceCalc.Domain.Models.Bonds
              0.50, // CouponProfitabilityYear
              0.40, // CapitalProfitabilityYear
         ];
-        private static readonly double _durationPenaltyThreshold = DoubleTime.Months(1);
 
         public void CalculateRelevance(IEnumerable<IBond> bonds, BondsMetadata context)
         {

@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Pollyakov.Infrastructure\Pollyakov.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\UI\" />
+  </ItemGroup>
+
 </Project>

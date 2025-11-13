@@ -282,11 +282,11 @@
                         <Label
                             Grid.Row="1"
                             Grid.Column="3"
-                            Grid.ColumnSpan="2"
-                            Margin="-4,15,32,-10"
+                            Margin="-4,15,30,-10"
                             Panel.ZIndex="1"
                             Content="m"
-                            Foreground="#656565" />
+                            Foreground="#656565"
+                            IsHitTestVisible="False" />
                         <TextBox
                             Name="ProfitabilityPerDurationMinBox"
                             Grid.Row="1"
@@ -294,14 +294,15 @@
                             Style="{StaticResource InputTextBoxStyle}"
                             TextChanged="Filter_TextChanged"
                             ToolTip="With maximum duration." />
+
                         <Label
                             Grid.Row="1"
                             Grid.Column="4"
-                            Grid.ColumnSpan="2"
-                            Margin="-4,15,32,-10"
+                            Margin="-4,15,30,-10"
                             Panel.ZIndex="1"
                             Content="m"
-                            Foreground="#656565" />
+                            Foreground="#656565"
+                            IsHitTestVisible="False" />
                         <TextBox
                             Name="ProfitabilityPerDurationMaxBox"
                             Grid.Row="1"
@@ -364,15 +365,6 @@
                     <TextBlock Name="FoundCountText" Margin="4,0,0,0" />
                 </StackPanel>
             </Border>
-
-            <!--  Metrics View  -->
-            <!--<Border
-                Grid.Row="2"
-                Margin="0,0,0,8"
-                Padding="0"
-                Style="{StaticResource CardBorderStyle}">
-                <controls:BondMetricsView x:Name="MetricsView" />
-            </Border>-->
 
             <DataGrid
                 Name="BondsGrid"
@@ -569,6 +561,48 @@
                 </StackPanel>
 
             </Grid>
+
+            <Grid
+                x:Name="LoadingOverlay"
+                Grid.RowSpan="5"
+                Margin="-35"
+                Panel.ZIndex="100"
+                Background="#50000000"
+                Visibility="Collapsed">
+                <Border
+                    Padding="30"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="White"
+                    BorderBrush="#D1D5DB"
+                    BorderThickness="1"
+                    CornerRadius="12">
+                    <StackPanel>
+                        <TextBlock
+                            x:Name="LoadingTextBlock"
+                            Margin="0,0,0,12"
+                            HorizontalAlignment="Center"
+                            FontSize="18"
+                            FontWeight="SemiBold"
+                            Foreground="#2B3E50"
+                            Text="Fetching MOEX..." />
+                        <ProgressBar
+                            Width="300"
+                            Height="14"
+                            Foreground="#007ACC"
+                            IsIndeterminate="True" />
+                        <TextBlock
+                            x:Name="LoadingStatusTextBlock"
+                            MaxWidth="300"
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Center"
+                            FontSize="12"
+                            Foreground="#6B7280"
+                            Text="" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
         </Grid>
     </Border>
 </Window>

@@ -77,7 +77,7 @@ namespace FinanceCalc.Forms
 
         private bool FilterPredicate(object obj)
         {
-            if (obj is not IBond bond) 
+            if (obj is not IBond bond)
                 return false;
             var noOfferFilter = (FindName("NoOfferFilter") as CheckBox)?.IsChecked;
             var needQualificationFilter = (FindName("NeedQualificationFilter") as CheckBox)?.IsChecked;
@@ -195,17 +195,44 @@ namespace FinanceCalc.Forms
 
         private async void FetchMoex_Click(object sender, RoutedEventArgs e)
         {
-            await _service.ImportFromMoex();
-            await CalculateAndSaveMetrics();
-            await ReloadAsync();
+            await RunWithLoading(async (updateStatus) =>
+            {
+                updateStatus("Importing data from MOEX...");
+                await _service.ImportFromMoex();
+                updateStatus("Calculating metrics...");
+                await CalculateAndSaveMetrics(updateStatus);
+                updateStatus("Reloading grid...");
+                await ReloadAsync();
+            }, "Fetching Bonds Data...");
         }
 
         private async void CalculateMetrics_Click(object sender, RoutedEventArgs e)
         {
-            await CalculateAndSaveMetrics();
+            await RunWithLoading(CalculateAndSaveMetrics);
         }
 
-        private async Task CalculateAndSaveMetrics()
+        private async Task RunWithLoading(Func<Action<string>, Task> action, string loadingTitle = "Loading...")
+        {
+            LoadingOverlay.Visibility = Visibility.Visible;
+            LoadingTextBlock.Text = loadingTitle;
+            try
+            {
+                await action(
+                    status => LoadingStatusTextBlock.Text = status);
+            }
+            catch (OperationCanceledException) { }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                LoadingOverlay.Visibility = Visibility.Collapsed;
+                LoadingTextBlock.Text = "Loading...";
+            }
+        }
+
+        private async Task CalculateAndSaveMetrics(Action<string> updateStatus)
         {
             try
             {
