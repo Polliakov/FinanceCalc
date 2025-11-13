@@ -2,8 +2,8 @@ using FinanceCalc.Application.Catalog.Repositories.Abstractions;
 using FinanceCalc.Domain.Abstractions;
 using FinanceCalc.Domain.Entities;
 using FinanceCalc.Domain.Exceptions.EntityExceptions;
-using FinanceCalc.Domain.Mappings;
 using FinanceCalc.Domain.Models.Bonds;
+using FinanceCalc.Persistence.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceCalc.Persistence.Repositories

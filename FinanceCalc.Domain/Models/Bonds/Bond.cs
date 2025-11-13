@@ -38,23 +38,29 @@ namespace FinanceCalc.Domain.Models.Bonds
                 Coupon = coupon;
                 CouponsPerYear = couponsPerYear;
                 CouponsPeriodMonths = 12.0 / couponsPerYear;
-                CouponProfitability = new ComplexPercent(coupon / Cost, CouponsPeriodMonths.Value);
-                CouponProfitabilityYear = CouponProfitability.WithPeriod(12);
+
                 if (NextCouponDate is not null)
                 {
                     var couponsPeriodDays = 365.0 / couponsPerYear;
-                    // Dummy year rate for accumulated income calculation.
-                    AccumulatedCouponIncome = Coupon * (decimal)((DateTime.UtcNow.Date - NextCouponDate!.Value.Date.AddDays(-couponsPeriodDays)).TotalDays / couponsPeriodDays);
+                    var daysLeft =
+                        (DateTime.UtcNow.Date - NextCouponDate!.Value.Date.AddDays(-couponsPeriodDays)).TotalDays;
+
+                    AccumulatedCouponIncome = Coupon * (decimal)daysLeft / (decimal)couponsPeriodDays;
                 }
+
+                CouponProfitability = new ComplexPercent(
+                    coupon / (Cost + AccumulatedCouponIncome ?? 0), CouponsPeriodMonths.Value);
+                CouponProfitabilityYear = CouponProfitability.WithPeriod(12);
             }
+            var correctedDuration = DurationYears + 5 / 12 / 30;
             if (Cost > 0)
             {
-                CapitalProfitability = new ComplexPercent((Nominal - Cost) / Cost, DurationYears);
+                CapitalProfitability = new ComplexPercent((Nominal - Cost) / Cost, correctedDuration);
                 CapitalProfitabilityYear = CapitalProfitability.WithPeriod(1).SetPeriod(12);
             }
             else
             {
-                CapitalProfitability = ComplexPercent.Zero.SetPeriod(DurationYears);
+                CapitalProfitability = ComplexPercent.Zero.SetPeriod(correctedDuration);
                 CapitalProfitabilityYear = ComplexPercent.Zero.SetPeriod(12);
             }
             ProfitabilityYear = (CouponProfitabilityYear ?? ComplexPercent.Zero.SetPeriod(12)) + CapitalProfitabilityYear;
