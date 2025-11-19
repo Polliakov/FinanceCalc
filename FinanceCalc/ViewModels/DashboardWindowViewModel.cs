@@ -10,6 +10,9 @@ namespace FinanceCalc.ViewModels
         public PlotModel? WorthIncomePlotModel { get; set; }
         public DateTime StartDate { get; set; } = DateTime.Parse("2025-10-21");
         public DateTime EndDate { get; set; } = DateTime.Parse("2035-10-21");
+        public decimal CurrentWorth { get; set; } = 100_000m;
+        public decimal InflationYearRate { get; set; } = 0.075m;
+        public decimal IncomeYearRate { get; set; } = 0.16m;
         public decimal WorthAddingInMonth { get; private set; } = 10_000m;
         public string WorthAddingInMonthText
         {

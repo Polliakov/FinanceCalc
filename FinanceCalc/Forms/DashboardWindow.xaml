@@ -29,6 +29,36 @@
             Background="#EEE">
             <Label
                 Padding="10,5,5,0"
+                Content="Current Worth"
+                FontSize="10" />
+            <TextBox
+                Name="CurrentWorthTextBox"
+                Margin="5,5,5,10"
+                Text="{Binding Path=CurrentWorth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                TextAlignment="Right"
+                TextWrapping="Wrap" />
+            <Label
+                Padding="10,5,5,0"
+                Content="Inflation Year Rate"
+                FontSize="10" />
+            <TextBox
+                Name="InflationYearRateTextBox"
+                Margin="5,5,5,10"
+                Text="{Binding Path=InflationYearRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                TextAlignment="Right"
+                TextWrapping="Wrap" />
+            <Label
+                Padding="10,5,5,0"
+                Content="Income Year Rate"
+                FontSize="10" />
+            <TextBox
+                Name="IncomeYearRateTextBox"
+                Margin="5,5,5,10"
+                Text="{Binding Path=IncomeYearRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                TextAlignment="Right"
+                TextWrapping="Wrap" />
+            <Label
+                Padding="10,5,5,0"
                 Content="Worth Add In Month"
                 FontSize="10" />
             <TextBox

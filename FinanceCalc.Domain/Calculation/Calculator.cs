@@ -41,7 +41,7 @@ namespace FinanceCalc.Domain.Calculation
                 worthAdditives.Add(adding);
             }
 
-            var worth = 100_000m;
+            var worth = 500_000m;
             var worthAdding = 0m;
             var oldWorth = worth;
             var oldWorthAdding = worthAdding;

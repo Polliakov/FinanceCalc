@@ -29,6 +29,9 @@ namespace FinanceCalc.Forms
             {
                 StartDate = _model.StartDate,
                 EndDate = _model.EndDate,
+                CurrentWorth = _model.CurrentWorth,
+                InflationYearRate = _model.InflationYearRate,
+                IncomeYearRate = _model.IncomeYearRate,
                 WorthAdditives = { { "Adding", new WorthAdditive { Name = "Adding", InMonth = _model.WorthAddingInMonth } } },
             });
             CreatePlot(reports);
